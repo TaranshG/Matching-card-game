@@ -1,0 +1,526 @@
+/*
+  File: css/style.css
+  Author: CS1XD3 Student
+  Description: Styles for Memory Match! card game.
+               Bright cheerful design, mobile-first (max 480px).
+               Uses Fredoka One + Nunito fonts, pastel palette.
+  Date: 2026
+*/
+
+/* ===== RESET ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== VARIABLES ===== */
+:root {
+  --bg:          #fff9f0;
+  --yellow:      #ffd166;
+  --pink:        #ff6b9d;
+  --blue:        #4ecdc4;
+  --purple:      #9b59b6;
+  --green:       #06d6a0;
+  --red:         #ef476f;
+  --card-back:   #5c7cfa;
+  --card-front:  #ffffff;
+  --text-dark:   #2d3436;
+  --text-mid:    #636e72;
+  --border:      #dfe6e9;
+  --shadow:      rgba(0,0,0,0.15);
+  --radius:      14px;
+  --font-title:  'Fredoka One', cursive;
+  --font-body:   'Nunito', sans-serif;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: var(--font-body);
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+.hidden { display: none !important; }
+
+/* ===== SPLASH ===== */
+#splash-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  transition: opacity 0.5s ease;
+}
+
+#splash-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#splash-canvas {
+  width: min(400px, 92vw);
+  height: min(320px, 55vh);
+  display: block;
+}
+
+#start-btn {
+  margin-top: 24px;
+  padding: 16px 48px;
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  background: var(--pink);
+  color: white;
+  border: 3px solid #d6004b;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #d6004b;
+  transition: transform 0.1s, box-shadow 0.1s;
+  animation: popIn 0.5s ease both;
+}
+
+#start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #d6004b;
+}
+
+#start-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #d6004b;
+}
+
+@keyframes popIn {
+  0%   { transform: scale(0.5); opacity: 0; }
+  70%  { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== HELP OVERLAY ===== */
+#help-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 20px;
+}
+
+#help-box {
+  background: white;
+  border-radius: var(--radius);
+  border: 3px solid var(--yellow);
+  padding: 28px 22px;
+  max-width: 380px;
+  width: 100%;
+  box-shadow: 0 8px 30px var(--shadow);
+}
+
+#help-box h2 {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  color: var(--purple);
+  margin-bottom: 14px;
+}
+
+#help-box ul {
+  padding-left: 20px;
+  line-height: 2;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+}
+
+#close-help-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  font-family: var(--font-title);
+  font-size: 1rem;
+  background: var(--blue);
+  color: white;
+  border: 3px solid #2ab0a8;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #2ab0a8;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+#close-help-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #2ab0a8;
+}
+
+/* ===== APP LAYOUT ===== */
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px 14px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* ===== HEADER ===== */
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#game-title {
+  font-family: var(--font-title);
+  font-size: 1.75rem;
+  color: var(--purple);
+  /* fun text shadow like a beginner would add */
+  text-shadow: 2px 2px 0 #d4aaff;
+}
+
+#header-btns {
+  display: flex;
+  gap: 8px;
+}
+
+.small-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--border);
+  transition: transform 0.1s, box-shadow 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.small-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--border);
+}
+
+.small-btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+/* ===== ROUND ROW ===== */
+#round-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#round-text {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--text-mid);
+}
+
+#round-pips {
+  display: flex;
+  gap: 6px;
+}
+
+.pip {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background: white;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.pip.done   { background: var(--green); border-color: #04b885; }
+.pip.active { background: white; border-color: var(--purple); box-shadow: 0 0 0 3px #e9d5ff; }
+
+/* ===== STATS BAR ===== */
+#stats-bar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background: white;
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  padding: 10px 8px;
+  box-shadow: 0 3px 0 var(--border);
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-num {
+  font-family: var(--font-title);
+  font-size: 1.4rem;
+  color: var(--purple);
+  line-height: 1;
+}
+
+.stat-lbl {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-mid);
+  margin-top: 3px;
+}
+
+/* ===== PROGRESS BAR ===== */
+#progress-wrap {
+  width: 100%;
+  height: 12px;
+  background: #f0e6ff;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid #d4aaff;
+}
+
+#progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+/* ===== BOARD ===== */
+#board {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  /* grid columns set by JS */
+}
+
+/* ===== CARDS ===== */
+/*
+  Each card is a 3D flip container.
+  .card-inner rotates 180deg when .flipped is added.
+*/
+.card {
+  aspect-ratio: 1;
+  perspective: 600px;
+  cursor: pointer;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+  border-radius: 12px;
+}
+
+.card.flipped .card-inner,
+.card.matched .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front (emoji face) and back share absolute positioning */
+.card-front,
+.card-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Card back - the hidden side shown at start */
+.card-back {
+  background: var(--card-back);
+  border: 3px solid #3a5fd9;
+  box-shadow: 0 4px 0 #3a5fd9;
+  font-size: 1.6rem;
+}
+
+.card-back::after {
+  content: '❓';
+}
+
+/* Card front - the emoji revealed on flip */
+.card-front {
+  background: var(--card-front);
+  border: 3px solid var(--border);
+  box-shadow: 0 4px 0 var(--border);
+  transform: rotateY(180deg);
+  font-size: clamp(1.4rem, 6vw, 2.2rem);
+}
+
+/* Matched cards glow green */
+.card.matched .card-front {
+  background: #e8fff5;
+  border-color: var(--green);
+  box-shadow: 0 4px 0 #04b885;
+}
+
+/* Wrong-pair shake animation */
+.card.wrong {
+  animation: cardShake 0.4s ease;
+}
+
+@keyframes cardShake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  60%      { transform: translateX(6px); }
+}
+
+/* ===== RESULT SCREEN ===== */
+#result-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 400;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+#result-box {
+  background: white;
+  border-radius: 20px;
+  border: 3px solid var(--yellow);
+  padding: 28px 22px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 40px var(--shadow);
+  animation: slideUp 0.4s ease both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#result-big-emoji {
+  font-size: 3.5rem;
+  margin-bottom: 8px;
+}
+
+#result-heading {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  color: var(--purple);
+  margin-bottom: 8px;
+}
+
+#result-stats,
+#result-best {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  margin-bottom: 4px;
+}
+
+#result-box h3 {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--text-mid);
+  text-align: left;
+  margin: 18px 0 8px;
+}
+
+/* Breakdown table */
+#breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+#breakdown-table th {
+  font-family: var(--font-title);
+  color: var(--text-mid);
+  font-weight: 400;
+  padding: 4px 8px 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+#breakdown-table td {
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dark);
+}
+
+#breakdown-table td:nth-child(2),
+#breakdown-table td:nth-child(3) {
+  color: var(--purple);
+  font-weight: 700;
+}
+
+#breakdown-table tr:last-child td { border-bottom: none; }
+
+/* History list */
+#history-list {
+  list-style: none;
+  text-align: left;
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+#history-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+
+#history-list li:last-child { border-bottom: none; }
+
+.h-date  { color: var(--text-mid); }
+.h-score { color: var(--purple); font-weight: 700; }
+
+#play-again-btn {
+  margin-top: 22px;
+  width: 100%;
+  padding: 14px;
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  background: var(--green);
+  color: white;
+  border: 3px solid #04b885;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #04b885;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+#play-again-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #04b885;
+}
+
+#play-again-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #04b885;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+/* ===== RESPONSIVE (wider screens) ===== */
+@media (min-width: 481px) {
+  #app        { padding: 24px 24px 50px; }
+  #game-title { font-size: 2.1rem; }
+}

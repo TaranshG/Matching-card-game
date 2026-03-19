@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--
+  File: index.html
+  Author: CS1XD3 Student
+  Description: Memory Match! - a card matching game for adults.
+               Main HTML page. Shows a splash screen, the game board,
+               and a results screen when all pairs are found.
+               Designed to look good on phones (480px wide or less).
+  Date: 2026
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Match!</title>
+
+  <!-- Google Fonts - using Fredoka One for a fun beginner feel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ========== SPLASH SCREEN ========== -->
+  <div id="splash-screen">
+    <canvas id="splash-canvas"></canvas>
+    <button id="start-btn" class="hidden">Let's Play! 🎮</button>
+  </div>
+
+  <!-- ========== MAIN GAME ========== -->
+  <div id="app" class="hidden">
+
+    <!-- Help overlay -->
+    <div id="help-overlay" class="hidden">
+      <div id="help-box">
+        <h2>How to Play 🤔</h2>
+        <ul>
+          <li>Flip two cards to find a matching pair!</li>
+          <li>If they match, they stay face up ✅</li>
+          <li>If they don't match, they flip back 🔄</li>
+          <li>Find ALL the pairs to finish the round!</li>
+          <li>There are <strong>5 rounds</strong> total.</li>
+          <li>Try to use as few flips as possible!</li>
+        </ul>
+        <button id="close-help-btn">OK got it!</button>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div id="header">
+      <h1 id="game-title">Memory Match! 🧠</h1>
+      <div id="header-btns">
+        <button class="small-btn" id="help-btn">?</button>
+        <button class="small-btn" id="restart-btn">↺</button>
+      </div>
+    </div>
+
+    <!-- Round indicator -->
+    <div id="round-row">
+      <span id="round-text">Round 1 of 5</span>
+      <div id="round-pips"></div>
+    </div>
+
+    <!-- Stats bar -->
+    <div id="stats-bar">
+      <div class="stat-box">
+        <div class="stat-num" id="flip-count">0</div>
+        <div class="stat-lbl">Flips</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="match-count">0</div>
+        <div class="stat-lbl">Matches</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="timer-display">0:00</div>
+        <div class="stat-lbl">Time</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="best-display">--</div>
+        <div class="stat-lbl">Best</div>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div id="progress-wrap">
+      <div id="progress-fill"></div>
+    </div>
+
+    <!-- Card board -->
+    <div id="board"></div>
+
+  </div><!-- end #app -->
+
+  <!-- ========== RESULT SCREEN ========== -->
+  <div id="result-screen" class="hidden">
+    <div id="result-box">
+      <div id="result-big-emoji">🎉</div>
+      <h2 id="result-heading">You did it!!</h2>
+      <p  id="result-stats"></p>
+      <p  id="result-best"></p>
+
+      <h3>Round breakdown 📋</h3>
+      <table id="breakdown-table">
+        <thead><tr><th>Round</th><th>Flips</th><th>Time</th></tr></thead>
+        <tbody id="breakdown-body"></tbody>
+      </table>
+
+      <h3>Your history 📜</h3>
+      <ul id="history-list"></ul>
+
+      <button id="play-again-btn">Play Again! 🔁</button>
+    </div>
+  </div>
+
+  <!-- JS files in dependency order -->
+  <script src="js/SoundManager.js"></script>
+  <script src="js/Card.js"></script>
+  <script src="js/GameModel.js"></script>
+  <script src="js/SplashAnimation.js"></script>
+  <script src="js/App.js"></script>
+
+</body>
+</html>
