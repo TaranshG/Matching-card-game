@@ -1,6 +1,6 @@
 /**
  * File: js/SplashAnimation.js
- * Author: CS1XD3 Student
+ * Author: Taransh Goyal
  * Description: Draws the animated intro banner on the splash screen canvas.
  *              Shows several emoji cards dropping into place from above,
  *              followed by the game title fading in.

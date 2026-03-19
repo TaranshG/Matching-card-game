@@ -1,6 +1,6 @@
 /**
  * File: js/SoundManager.js
- * Author: CS1XD3 Student
+ * Author: Taransh Goyal
  * Description: Generates all sound effects using the Web Audio API.
  *              No external audio files needed. Sounds: card flip,
  *              match success, wrong-pair buzz, and win fanfare.

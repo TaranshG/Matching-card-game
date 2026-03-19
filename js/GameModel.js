@@ -1,6 +1,6 @@
 /**
  * File: js/GameModel.js
- * Author: CS1XD3 Student
+ * Author: Taransh Goyal
  * Description: Models the complete state of the Memory Match game.
  *              Manages the card deck, flip logic, match detection,
  *              flip counting, progress tracking, and board shuffling.

@@ -1,6 +1,6 @@
 /**
  * File: js/App.js
- * Author: CS1XD3 Student
+ * Author: Taransh Goyal
  * Description: Main controller for Memory Match!
  *              Connects the GameModel (state), DOM elements (view),
  *              SoundManager, SplashAnimation, and localStorage history.

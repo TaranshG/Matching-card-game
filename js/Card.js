@@ -1,6 +1,6 @@
 /**
  * File: js/Card.js
- * Author: CS1XD3 Student
+ * Author: Taransh Goyal
  * Description: Represents a single card in the memory matching game.
  *              Tracks the card's emoji symbol, whether it is face-up,
  *              and whether it has been matched.
