@@ -1,6 +1,6 @@
 /**
  * File: js/App.js
- * Author: Taransh Goyal
+ * Author: CS1XD3 Student
  * Description: Main controller for Memory Match!
  *              Connects the GameModel (state), DOM elements (view),
  *              SoundManager, SplashAnimation, and localStorage history.
@@ -295,16 +295,63 @@ window.addEventListener("load", () => {
   }
 
   /**
-   * Sets up one round: creates a new model, renders the board, starts timer.
+   * Sets up one round: creates a new model, briefly shows all cards face-up
+   * as a "peek" preview, then flips them face-down and starts the timer.
+   * The board is locked during the peek so the player cannot click cards.
    */
   function _startRound() {
+    /** @const {number} How long (ms) cards stay face-up during the peek. */
+    const PEEK_DURATION = 1800;
+
     model = new GameModel(PAIRS_PER_ROUND[currentRound]);
     _stopTimer();
-    _startTimer();
     _renderRoundLabel();
     _renderPips();
-    _renderBoard();
     _renderStats();
+
+    // Lock the model so clicks are ignored during peek
+    model.locked = true;
+
+    // Render board with all cards visually flipped up
+    _renderBoardPeeking();
+
+    // After PEEK_DURATION, flip all cards back down and start the timer
+    setTimeout(() => {
+      model.locked = false;
+      _renderBoard();
+      _startTimer();
+    }, PEEK_DURATION);
+  }
+
+  /**
+   * Renders the board with every card shown face-up (peek mode).
+   * No click listeners are attached so the player cannot interact yet.
+   */
+  function _renderBoardPeeking() {
+    const cols = COLS_PER_ROUND[currentRound];
+    board.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+    board.innerHTML = "";
+
+    model.getCards().forEach((card) => {
+      const div   = document.createElement("div");
+      div.classList.add("card", "flipped", "peeking");   // flipped = face-up visually
+
+      const inner = document.createElement("div");
+      inner.classList.add("card-inner");
+
+      const back  = document.createElement("div");
+      back.classList.add("card-back");
+
+      const front = document.createElement("div");
+      front.classList.add("card-front");
+      front.textContent = card.emoji;
+
+      inner.appendChild(back);
+      inner.appendChild(front);
+      div.appendChild(inner);
+      board.appendChild(div);
+      // No click listener — board is locked during peek
+    });
   }
 
   /**
